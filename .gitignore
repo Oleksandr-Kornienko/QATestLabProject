@@ -1,10 +1,8 @@
-
-## File-based project format:
-*.iws
-
 ## Directory-based project format:
 .idea/
 target/
 driver/
 
+$ cat .gitignore
+*.iml
 
