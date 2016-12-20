@@ -100,10 +100,9 @@ public class Lecture3Homework {
     }
 
     private static void doScroll() {
-        final By showingImages = By.xpath("//div[@class='img_cont hoff']/img");
         final JavascriptExecutor jse = (JavascriptExecutor) driver;
         jse.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         (new WebDriverWait(driver, 10)).ignoring(StaleElementReferenceException.class)
-                .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(showingImages));
+                .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//div[@class='img_cont hoff']/img")));
     }
 }
