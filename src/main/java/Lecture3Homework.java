@@ -1,17 +1,15 @@
-import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Lecture3Homework {
-    static WebDriver driver;
+    private static WebDriver driver;
 
     public static void main(String[] args) {
         System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
@@ -38,10 +36,11 @@ public class Lecture3Homework {
         вместо “automation”). Дождаться появления слова целиком в выпадающем списке
         предложений. Выбрать искомое слово и дождаться загрузки результатов
         поискового запроса.*/
-        driver.navigate().to("https://www.bing.com/images/explore?FORM=ILPSTR");
+        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0)");
+        waitUntilVisible(By.className("b_searchbox"));
         getElement(By.className("b_searchbox")).sendKeys("automatio");
         waitUntilAllVisible(By.xpath("//div[@class='sa_tm']/strong"));
-        getElements(By.xpath("//div[@class='sa_tm']/strong")).get(2).click();
+        getElement(By.xpath("//div[@class='sa_tm']/strong[text()='n']")).click();
 
 
         // 5. Установить фильтр Дата: “В прошлом месяце”. Дождаться обновления результатов.
@@ -52,17 +51,22 @@ public class Lecture3Homework {
 
         /* 6. Нажать на первое изображение из результатов поиска. Дождаться перехода в
         режим слайд шоу.*/
+
+        //remove staleness
         waitUntilStaleness(By.xpath("//div[@class='dg_u']"));
         waitUntilAllVisible(By.xpath("//div[@class='dg_u']"));
         getElement(By.xpath("//div[1][@class='dg_u']")).click();
-        driver.navigate().refresh();
+        driver.switchTo().frame("OverlayIFrame");
         waitUntilVisible(By.xpath("//a[@title='Следующий результат поиска изображений']"));
 
         /*7. Выполнить переключение на следующее, предыдущее изображение. После
         переключения между изображениями необходимо дожидаться обновления
         очереди изображений для показа в нижней части окна слайд шоу.*/
+        String styleBeforeChanging = getElement(By.xpath("//div[@id='iol_fsc']")).getAttribute("Style");
         getElement(By.xpath("//a[@title='Следующий результат поиска изображений']")).click();
-        waitUntilVisible(By.xpath("//div[@id='detail_film']"));
+        waitUntilVisible(By.xpath("//div[@id='iol_fsc']"));
+        String styleAfterChanging = getElement(By.xpath("//div[@id='iol_fsc']")).getAttribute("Style");
+        Assert.assertTrue(!styleBeforeChanging.equals(styleAfterChanging));
         getElement(By.xpath("//a[@title='Предыдущий результат поиска изображений']")).click();
         waitUntilVisible(By.xpath("//div[@id='detail_film']"));
 
@@ -100,9 +104,11 @@ public class Lecture3Homework {
     }
 
     private static void doScroll() {
-        final JavascriptExecutor jse = (JavascriptExecutor) driver;
-        jse.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        int imagesBeforeScroll = driver.findElements(By.xpath("//div[@class='img_cont hoff']/img")).size();
+        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight)");
         (new WebDriverWait(driver, 10)).ignoring(StaleElementReferenceException.class)
                 .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//div[@class='img_cont hoff']/img")));
+        int imagesAfterScroll = driver.findElements(By.xpath("//div[@class='img_cont hoff']/img")).size();
+        Assert.assertTrue(imagesAfterScroll > imagesBeforeScroll);
     }
 }
