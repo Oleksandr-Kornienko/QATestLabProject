@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="TestNgParametersSuite" parallel="false">
+    <parameter name="minimalPictureNumber" value="5"></parameter>
+    <test name="TestNgParametersTest">
+        <classes>
+            <class
+            name="Lecture4Homework" />
+        </classes>
+    </test>
+</suite>

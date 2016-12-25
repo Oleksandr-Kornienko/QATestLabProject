@@ -51,8 +51,6 @@ public class Lecture3Homework {
 
         /* 6. Нажать на первое изображение из результатов поиска. Дождаться перехода в
         режим слайд шоу.*/
-
-        //remove staleness
         waitUntilStaleness(By.xpath("//div[@class='dg_u']"));
         waitUntilAllVisible(By.xpath("//div[@class='dg_u']"));
         getElement(By.xpath("//div[1][@class='dg_u']")).click();

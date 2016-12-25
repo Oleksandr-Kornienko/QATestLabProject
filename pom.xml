@@ -8,6 +8,10 @@
     <artifactId>test</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <suite>Lecture5Homework</suite>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -19,7 +23,6 @@
             <artifactId>testng</artifactId>
             <version>6.9.10</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -35,6 +38,9 @@
                                 ${project.basedir}${file.separator}driver${file.separator}chromedriver.exe
                             </driver.chrome>
                         </systemPropertyVariables>
+                        <suiteXmlFiles>
+                            <suiteXmlFile>src/main/resources/${suite}.xml</suiteXmlFile>
+                        </suiteXmlFiles>
                     </configuration>
                 </plugin>
             </plugins>

@@ -20,7 +20,7 @@ public class Lecture4Homework {
     protected Object[][] testData() {
         Properties cred = new Properties();
         try {
-            FileInputStream input = new FileInputStream("src/main/java/testData.txt");
+            FileInputStream input = new FileInputStream("src/main/resources/testData.txt");
             cred.load(input);
             input.close();
         } catch (IOException e) {
