@@ -32,7 +32,9 @@ public class Lecture5Homework {
         if (browser.equalsIgnoreCase("Firefox")) {
             driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), DesiredCapabilities.firefox());
         }
-
+        if (browser.equalsIgnoreCase("Android")) {
+            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), DesiredCapabilities.android());
+        }
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         //1. Открыть главную страницу Bing http://www.bing.com/
