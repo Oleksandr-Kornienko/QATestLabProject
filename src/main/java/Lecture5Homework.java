@@ -56,8 +56,8 @@ public class Lecture5Homework {
         поискового запроса. Данные поискового запроса должны передаваться в тестовый
         метод используя @DataProvider.*/
         driver.findElement(By.className("b_searchbox")).sendKeys(text);
-        waitUntilVisible(By.xpath("//li[@id='sa_5005']/div"));
-        driver.findElement(By.xpath("//li[@id='sa_5005']/div")).click();
+        waitUntilVisible(By.xpath("//div[@class='sa_tm']/strong[text()='n']"));
+        driver.findElement(By.xpath("//div[@class='sa_tm']/strong[text()='n']")).click();
         waitUntilVisible(By.xpath("//li[@class='b_algo']"));
 
         /*4. Для каждого результата поиска выполнить следующие действия:
